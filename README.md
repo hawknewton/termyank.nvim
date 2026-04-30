@@ -15,7 +15,10 @@ Terminal output uses `\r\n` line endings and terminal rows hard-wrap long lines.
 ### lazy.nvim
 
 ```lua
-{ "hawknewton/termyank.nvim" }
+{
+  "hawknewton/termyank.nvim",
+  event = { "TermOpen", "TermEnter" },
+}
 ```
 
 ### packer.nvim
@@ -46,6 +49,7 @@ With lazy.nvim:
 ```lua
 {
   "hawknewton/termyank.nvim",
+  event = { "TermOpen", "TermEnter" },
   opts = { text_objects_span_lines = true },
 }
 ```
