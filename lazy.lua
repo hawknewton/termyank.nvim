@@ -1,3 +1,3 @@
 return {
-  event = { "TermOpen", "TermEnter" },
+	event = { "TermOpen", "TermEnter" },
 }
