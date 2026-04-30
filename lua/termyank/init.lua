@@ -392,8 +392,9 @@ local function install_text_objects(buf)
   for _, name in ipairs(wrap_aware_text_objects) do
     local handler = text_object_handlers[name]
     if handler then
-      local rhs = string.format("<Cmd>lua require('termyank').%s()<CR>", handler)
-      vim.keymap.set({ "o", "x" }, name, rhs, { buffer = buf, silent = true })
+      vim.keymap.set({ "o", "x" }, name, function()
+        M[handler]()
+      end, { buffer = buf, silent = true })
     end
   end
 end
