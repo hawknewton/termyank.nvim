@@ -65,7 +65,6 @@ Sanitization is on by default. Text-object overrides are not affected by these c
 ## How it works
 
 - A `TextYankPost` autocmd handles yanks, deletes, and changes (Neovim fires this event for all three) originating in buffers where `&buftype == "terminal"`.
-- A buffer-local `TextChanged` autocmd attached on `TermOpen` catches any other register writes inside terminal buffers as a safety net.
 - On `TermOpen` the plugin sets `wrap` for the window so navigating past the right edge in normal mode doesn't side-scroll into the terminal's trailing padding.
 - On `TermOpen`, if `text_objects_span_lines = true`, buffer-local operator-pending and visual-mode mappings are installed for the wrap-aware text objects listed above.
 

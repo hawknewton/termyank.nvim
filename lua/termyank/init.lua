@@ -1,7 +1,6 @@
 local M = {}
 
 local augroup_name = "termyank"
-local fallback_registers = { '"', "-", "1", "*", "+" }
 local enabled = true
 
 local default_opts = {
@@ -57,38 +56,12 @@ local function sanitize_register(regname, lines, regtype)
   vim.fn.setreg(target, cleaned, new_regtype)
 end
 
-local function sanitize_register_by_name(regname)
-  local info = vim.fn.getreginfo(regname)
-  if not info or not info.regcontents then
-    return
-  end
-  sanitize_register(regname, info.regcontents, info.regtype)
-end
-
 local function on_text_yank_post()
   if not enabled or vim.bo.buftype ~= "terminal" then
     return
   end
   local event = vim.v.event
   sanitize_register(event.regname, event.regcontents, event.regtype)
-end
-
-local function on_text_changed()
-  if not enabled then
-    return
-  end
-  local seen = {}
-  local function visit(name)
-    if not name or name == "" or seen[name] then
-      return
-    end
-    seen[name] = true
-    sanitize_register_by_name(name)
-  end
-  for _, name in ipairs(fallback_registers) do
-    visit(name)
-  end
-  visit(vim.v.register)
 end
 
 local function line_is_blank(buf, lnum)
@@ -445,11 +418,6 @@ function M.setup(user_opts)
     callback = function(args)
       vim.wo.wrap = true
       install_text_objects(args.buf)
-      vim.api.nvim_create_autocmd("TextChanged", {
-        group = group,
-        buffer = args.buf,
-        callback = on_text_changed,
-      })
     end,
   })
 
