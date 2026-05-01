@@ -4,6 +4,8 @@ For us poor bastards that don't just use tmux for some reason.
 
 Clean up register contents after yanking, deleting, or changing text inside a Neovim `:terminal` buffer: strip `\r` characters, and collapse wrap-induced line breaks so word-level yanks that cross terminal row boundaries paste as a single string.
 
+Optionally overrides text-object commands (`yiW`, `yi(`, etc) to work across newlines.
+
 If you want to preserve `\r`'s use a **Blockwise** select (`<C-v>`).
 
 ## Why
